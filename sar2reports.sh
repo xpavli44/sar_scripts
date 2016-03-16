@@ -91,7 +91,7 @@ csv2report()
 local output=${1%%.*}_reports.csv
 echo -e "converting ; separated csv file $1 to reports server compatible format"
 #create header
-awk 'FNR<2 {print}' $1 | sed 's/.$/"/g' | awk '$1=$1' FS=";" OFS="\",\"" | sed 's/^/"/' | awk '$1="\"(PDH-CSV 4.0) (Central Daylight Time)(300)\",\""' | sed 's/,"/,"\\\\LINUX-01\\/g' > $output
+awk 'FNR<2 {print}' $1 | sed 's/.$/"/g' | awk '$1=$1' FS=";" OFS="\",\"" | sed 's/^/"/' | awk '$1="\"(PDH-CSV 4.0) (Central Daylight Time)(300)\",\""' | sed 's/,"/,"\\\\LINUX-01\\sar\\/g' > $output
 #process data lines
 awk 'FNR>2 {print}' $1 | sed 's/.$/"/g' | awk '$1=$1' FS=";" OFS="\",\"" | sed 's/^/"/' | awk -F, 'OFS=","{date=("date --date="$1" +\"%m/%d/%Y %T.%3N\" "); date | getline $1; close(date)}1' | awk -F, '{sub($1, "\"&\""); print}' >> $output
 
