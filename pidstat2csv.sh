@@ -25,8 +25,10 @@ is_file_exits(){
 # Invoke is_file_exits
 if ( is_file_exits "$1" )
 then
+        #get process name
+        process=`awk 'FNR==4 {print $17}' $input_file`
         #create header in output csv
-        echo '﻿"(PDH-CSV 4.0) (Central Daylight Time)(300)","\\LINUX-01\Process\UID","\\LINUX-01\Process\PID","\\LINUX-01\Process\%usr","\\LINUX-01\Process\%system","\\LINUX-01\Process\%guest","\\LINUX-01\Process\%CPU","\\LINUX-01\Process\CPU  minflt/s","\\LINUX-01\Process\majflt/s","\\LINUX-01\Process\VSZ","\\LINUX-01\Process\RSS","\\LINUX-01\Process\%MEM","\\LINUX-01\Process\kB_rd/s","\\LINUX-01\Process\kB_wr/s","\\LINUX-01\Process\kB_ccwr/s","\\LINUX-01\Process\iodelay","\\LINUX-01\Process\Command"' > $output_file
+        echo -e ﻿"\"(PDH-CSV 4.0)\ (Central Daylight Time)(300)\",\"\\\\\\LINUX-01\\Process(*)\\$process\\UID\",\"\\\\\\LINUX-01\\Process(*)\\$process\\PID\",\"\\\\\\LINUX-01\\Process(*)\\$process\\%usr\",\"\\\\\\LINUX-01\\Process(*)\\$process\\%system\",\"\\\\\\LINUX-01\\Process(*)\\$process\\%guest\",\"\\\\\\LINUX-01\\Process(*)\\$process\\%CPU\",\"\\\\\\LINUX-01\\Process(*)\\$process\\CPU  minflt/s\",\"\\\\\\LINUX-01\\Process(*)\\$process\\majflt/s\",\"\\\\\\LINUX-01\\Process(*)\\$process\\VSZ\",\"\\\\\\LINUX-01\\Process(*)\\$process\\RSS\",\"\\\\\\LINUX-01\\Process(*)\\$process\\%MEM\",\"\\\\\\LINUX-01\\Process(*)\\$process\\kB_rd/s\",\"\\\\\\LINUX-01\\Process(*)\\$process\\kB_wr/s\",\"\\\\\\LINUX-01\\Process(*)\\$process\\kB_ccwr/s\",\"\\\\\\LINUX-01\\Process(*)\\$process\\iodelay\",\"\\\\\\LINUX-01\\Process(*)\\$process\\Command\"" > $output_file 
         #remove all lines that do not begin with space followed by number
         awk '/^ [0-9]/' $input_file > $tmp_file
         #replace first space with quote "
