@@ -2,6 +2,10 @@
 # pidstat2csv.sh: shell program to convert output from pidstat to *.csv usable for reports server
 # pidstat command to be used: nohup pidstat -p `pidof YOUR_PROCESS_HERE` -u -d -r -h 10 720 >> /tmp/Perf_DPA_MySQL_DefaultPS.txt
 # pidstat command to be used: nohup pidstat -p `pidof YOUR_PROCESS_HERE` -u -d -r -h 10 60 >> /tmp/Perf_DPA_Oracle_`hostname`.txt
+# filename=/tmp/Perf_DPA_mysql-S12_`hostname`_`date +"%d_%m"`.txt; echo "" > $filename; pidstat -p $(pidof mysqld) -u -d -r -h 60 86400 >> $filename
+# filename=/tmp/Perf_DPA_oracle-S12_`hostname`_`date +"%d_%m"`.txt; echo "" > $filename; pidstat -p $(pidof ora_pmon_orcl) -p $(pidof ora_dbw0_orcl) -p $(pidof ora_lgwr_orcl) -p $(pidof ora_ckpt_orcl) -p $(pidof ora_smon_orcl) -p $(pidof ora_reco_orcl) -u -d -r -h 60 86400 >> $filename
+
+
 input_file=$1
 output_file=${input_file%%.*}.csv
 tmp_file=${input_file%%.*}.tmp
